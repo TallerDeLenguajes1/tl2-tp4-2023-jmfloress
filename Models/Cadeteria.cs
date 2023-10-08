@@ -7,15 +7,19 @@ public class Cadeteria
     private string telefono;
     private List<Cadete> listadoCadete;
     private List<Pedido> listadoPedido;
+    private AccesoADatosCadetes datosCadetes;
+    private AccesoADatosPedidos datosPedidos;
     private static Cadeteria cadeteriaSingleton;
 
     public static Cadeteria GetCadeteriaSingleton(string rutaCadetes, string rutaCadeterias){
+        
         if(cadeteriaSingleton == null){
-            AccesoADados helper = new AccesoJSON();
-            Random rand = new Random();
-            List<Cadeteria> cadeterias = helper.AccesoCadeterias(rutaCadeterias);
-            cadeteriaSingleton = cadeterias[rand.Next(0, cadeterias.Count())];
-            cadeteriaSingleton.listadoCadete = helper.AccesoCadetes(rutaCadetes);
+            AccesoADatosCadeteria helperCadeterias = new AccesoADatosCadeteria();
+            cadeteriaSingleton =helperCadeterias.Obtener();
+            cadeteriaSingleton.datosCadetes = new AccesoADatosCadetes();
+            cadeteriaSingleton.datosPedidos = new AccesoADatosPedidos();
+            cadeteriaSingleton.listadoCadete = cadeteriaSingleton.datosCadetes.Obtener();
+            cadeteriaSingleton.listadoPedido = cadeteriaSingleton.datosPedidos.Obtener();
         }
         return cadeteriaSingleton;
     }
@@ -41,8 +45,15 @@ public class Cadeteria
 
     public bool AltaPedido(Pedido pedido)
     {
+        bool resultado = false;
         this.ListadoPedido.Add(pedido);
-        return ListadoPedido.SingleOrDefault(p => p.Nro == pedido.Nro) != null;
+        if (ListadoPedido.SingleOrDefault(p => p.Nro == pedido.Nro) != null)
+        {
+            datosPedidos.Guardar(this.ListadoPedido);
+            resultado = true;
+        }
+
+        return resultado;
     }
 
     public bool BorrarPedido(int nro)
@@ -51,6 +62,7 @@ public class Cadeteria
         Pedido pedido = ListadoPedido.SingleOrDefault(p => p.Nro == nro);
         if(pedido != null){
             ListadoPedido.Remove(pedido);
+            datosPedidos.Guardar(this.ListadoPedido);
             resultado = true;
         }
         return resultado;
@@ -65,6 +77,7 @@ public class Cadeteria
             pedido.Cliente.Direccion = direccion;
             pedido.Cliente.Telefono = telefono;
             pedido.Cliente.DatosReferenciaDireccion = datosReferenciaDireccion;
+            datosPedidos.Guardar(this.ListadoPedido);
             resultado = true;
         }
         return resultado;
@@ -77,6 +90,7 @@ public class Cadeteria
         Cadete cadete = ListadoCadete.SingleOrDefault(c => c.Id == idCadete);
         if(pedido != null && cadete != null){
             pedido.Cadete = cadete;
+            datosPedidos.Guardar(this.ListadoPedido);
             resultado = true;
         }
         return resultado;
@@ -89,6 +103,7 @@ public class Cadeteria
             EstadoPedido aux;
             if(Enum.TryParse<EstadoPedido>($"{nuevoEstado}", out aux)){
                 pedido.Estado = aux;
+                datosPedidos.Guardar(this.ListadoPedido);
                 resultado = true;
             } 
         }
