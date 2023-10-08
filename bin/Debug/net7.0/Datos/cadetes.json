@@ -1,0 +1,21 @@
+[
+    {
+        "Id":0,
+        "Nombre":"Maria Perez",
+        "Direccion":" (111)888-9999",
+        "Telefono":"Laprida 1223"
+    },
+    {
+        "Id":1,
+        "Nombre":"Anto Gomez",
+        "Direccion":"(111)888-9999",
+        "Telefono":"Laprida 444"
+    },
+    {
+        "Id":2,
+        "Nombre":"Chopper",
+        "Direccion":"(111)888-9999",
+        "Telefono":"La isla de thrum"
+    }
+
+]
