@@ -1,0 +1,36 @@
+[
+    {
+      "Nro": 1,
+      "Obs": "Papas de especies marinas",
+      "Cliente": {
+        "Nombre": "Sanji",
+        "Direccion": "East Blue",
+        "Telefono": "444-444-444",
+        "DatosReferenciaDireccion": "ni dea"
+      },
+      "Estado": 2,
+      "Cadete": {
+        "Id": 2,
+        "Nombre": "Monkey D. Luffy",
+        "Direccion": "East Blue",
+        "Telefono": "555-777-000"
+      }
+    },
+    {
+      "Nro": 2,
+      "Obs": "Pizza",
+      "Cliente": {
+        "Nombre": "Gabriel",
+        "Direccion": "nidea",
+        "Telefono": "333-333-333",
+        "DatosReferenciaDireccion": "nidea"
+      },
+      "Estado": 2,
+      "Cadete": {
+        "Id": 1,
+        "Nombre": "Tony Tony Chopper",
+        "Direccion": "La isla de Drum",
+        "Telefono": "888-222-222"
+      }
+    }
+]

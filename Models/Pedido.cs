@@ -10,30 +10,46 @@ public class Pedido
     private string obs;
     private Cliente cliente;
     private EstadoPedido estado;
-    private Cadete cadete;
-
-    public Pedido(int nro, string obs, EstadoPedido estado, string nombre, string direccion, string telefono, string datosReferenciaDireccion)
+    private Cadete? cadete;
+    
+    public Pedido()
+    {
+        
+    }
+    public Pedido(int nro, string obs, int estado, string nombre, string direccion, string telefono, string datosReferenciaDireccion)
     {
         this.nro = nro;
         this.obs = obs;
         this.cliente = new Cliente(nombre, direccion, telefono, datosReferenciaDireccion);
-        this.estado = estado;
+        EstadoPedido aux;
+        if (Enum.TryParse<EstadoPedido>($"{estado}", out aux))
+            this.estado = aux;
+        else
+            this.estado = EstadoPedido.Pendiente;
         this.cadete = new Cadete();
     }
 
-    public int Nro { get => nro; }
-    public string Obs { get => obs; set => obs = value; }
-    public Cliente Cliente { get => cliente; }
+    public Pedido(int nro, string obs, string nombre, string direccion, string telefono, string datosReferenciaDireccion)
+    {
+        this.nro = nro;
+        this.obs = obs;
+        this.cliente = new Cliente(nombre, direccion, telefono, datosReferenciaDireccion);
+        this.estado = EstadoPedido.Pendiente;
+        this.cadete = new Cadete();
+    }
+
+    public int Nro { get => nro; set => nro = value; }
+    public string? Obs { get => obs; set => obs = value; }
+    public Cliente? Cliente { get => cliente; set => cliente = value; }
     public EstadoPedido Estado { get => estado; set => estado = value; }
-    public Cadete Cadete { get => cadete; set => cadete = value; }
+    public Cadete? Cadete { get => cadete; set => cadete = value; }
 
     public override string ToString()
     {
-        string obj = $"{this.obs}, {this.cliente.ToString()}";
-        if(this.cadete != null){
-            obj = obj + $", {this.cadete.ToString()}";
+        string obj = $"{this.Obs}, {this.Cliente.ToString()}";
+        if(this.Cadete != null){
+            obj = obj + $", {this.Cadete.ToString()}";
         }
         return obj;
     }
-
 }
